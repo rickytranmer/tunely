@@ -2,12 +2,13 @@
 
 //require express in our app
 var express = require('express');
-// generate a new express app and call it 'app'
 var app = express();
+
+var bodyParser = require('body-parser');
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
-
+app.use(bodyParser.urlencoded({extended: true}));
 
 /************
  * DATABASE *
@@ -48,7 +49,15 @@ app.get('/api/albums', function album_index(req, res){
   db.Album.find({}, function(err, docs) {
     err ? console.log('album_index error') : res.json(docs);
   });
-})
+});
+
+app.post("/api/albums", function album_create(req, res) {
+	console.log(req.body);
+	req.body.genres = req.body.genres.split(', ');
+	db.Album.create(req.body, function(err, doc) {
+		err ? console.log('album_create error') : res.json(doc);
+	});
+});
 
 
 /**********

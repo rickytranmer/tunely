@@ -45,6 +45,17 @@ $(document).ready(function() {
       renderAlbum(element);
     });
   });
+
+  $('#album-form').on('submit', function(event) {
+    event.preventDefault();
+    var formData = $(this).serialize();
+    console.log(formData);
+
+    $.post("/api/albums", formData, function(doc) {
+      renderAlbum(doc);
+    });
+    $(this).trigger("reset");
+  });
 });
 
 
