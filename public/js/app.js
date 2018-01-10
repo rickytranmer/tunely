@@ -89,6 +89,7 @@ function renderAlbum(album) {
   "                        <h4 class='inline-header'>Released date:</h4>" +
   "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
   "                      </li>" +
+  buildSongs(album.songs) +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
@@ -98,4 +99,16 @@ function renderAlbum(album) {
 
   // render to the page with jQuery
   $('#albums').append(albumHtml);
+}
+
+function buildSongs(songs) {
+  var songHtml = 
+  "<li class='list-group-item'>" +
+  "  <h4 class='inline-header'>Songs:</h4>" +
+  "  <span> "
+  songs.forEach(function(element) {
+    songHtml += " - (" + element.trackNumber + ") " +element.name;
+  });
+  songHtml += "</span></li>";
+  return songHtml;
 }
